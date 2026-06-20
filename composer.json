@@ -6,11 +6,7 @@
     "require": {
         "php": ">=7.3",
         "phpmailer/phpmailer": "^7.0",
-        "razorpay/razorpay": "^2.9"
-    },
-    "config": {
-        "platform": {
-            "php": "7.4"
-        }
+        "razorpay/razorpay": "^2.9",
+        "tecnickcom/tcpdf": "^6.11"
     }
 }

@@ -55,7 +55,7 @@ if (isset($_POST['print']) && !empty($_POST['date_range'])) {
     }
 
     // Generate PDF using TCPDF
-    require_once('../tcpdf/tcpdf.php');  
+    require_once(__DIR__ . '/../vendor/autoload.php');  
 
     $pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);  
     $pdf->SetCreator(PDF_CREATOR);  
