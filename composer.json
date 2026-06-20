@@ -1,0 +1,16 @@
+{
+    "name": "pavitra/saree-ecommerce",
+    "description": "Pavitra - Handcrafted Heritage Saree E-commerce Store",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": ">=7.3",
+        "phpmailer/phpmailer": "^7.0",
+        "razorpay/razorpay": "^2.9"
+    },
+    "config": {
+        "platform": {
+            "php": "7.4"
+        }
+    }
+}

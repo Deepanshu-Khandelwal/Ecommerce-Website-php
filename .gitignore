@@ -1,0 +1,30 @@
+# Database configuration & credentials (DO NOT COMMIT SENSITIVE FILES)
+.env
+
+# Composer dependencies
+/vendor/
+
+# Bower components
+/bower_components/
+
+# Log files
+*.log
+
+# IDEs and editors configuration
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# Temporary files
+*.tmp
+*.temp
