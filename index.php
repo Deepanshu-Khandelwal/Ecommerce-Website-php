@@ -40,38 +40,39 @@ include 'includes/header.php';
               $pdo->close();
 
               if (!empty($banners)):
-              ?>
-              <div id="carouselHero" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000">
-                <div class="carousel-indicators">
-                  <?php foreach ($banners as $i => $banner): ?>
-                    <button type="button" data-bs-target="#carouselHero" data-bs-slide-to="<?php echo $i; ?>" class="<?php echo ($i === 0) ? 'active' : ''; ?>" <?php echo ($i === 0) ? 'aria-current="true"' : ''; ?> aria-label="Slide <?php echo $i + 1; ?>"></button>
-                  <?php endforeach; ?>
-                </div>
+                ?>
+                <div id="carouselHero" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000">
+                  <div class="carousel-indicators">
+                    <?php foreach ($banners as $i => $banner): ?>
+                      <button type="button" data-bs-target="#carouselHero" data-bs-slide-to="<?php echo $i; ?>"
+                        class="<?php echo ($i === 0) ? 'active' : ''; ?>" <?php echo ($i === 0) ? 'aria-current="true"' : ''; ?> aria-label="Slide <?php echo $i + 1; ?>"></button>
+                    <?php endforeach; ?>
+                  </div>
 
-                <div class="carousel-inner">
-                  <?php foreach ($banners as $i => $banner): 
-                    $image_path = 'images/' . $banner['image'];
-                    $alt_text = !empty($banner['title']) ? htmlspecialchars($banner['title']) : 'Slide ' . ($i + 1);
-                    $slide_content = '<img src="' . $image_path . '" class="d-block w-100" alt="' . $alt_text . '">';
-                    if (!empty($banner['link'])) {
-                      $slide_content = '<a href="' . htmlspecialchars($banner['link']) . '">' . $slide_content . '</a>';
-                    }
-                  ?>
-                    <div class="carousel-item <?php echo ($i === 0) ? 'active' : ''; ?>">
-                      <?php echo $slide_content; ?>
-                    </div>
-                  <?php endforeach; ?>
-                </div>
+                  <div class="carousel-inner">
+                    <?php foreach ($banners as $i => $banner):
+                      $image_path = 'images/' . $banner['image'];
+                      $alt_text = !empty($banner['title']) ? htmlspecialchars($banner['title']) : 'Slide ' . ($i + 1);
+                      $slide_content = '<img src="' . $image_path . '" class="d-block w-100" alt="' . $alt_text . '">';
+                      if (!empty($banner['link'])) {
+                        $slide_content = '<a href="' . htmlspecialchars($banner['link']) . '">' . $slide_content . '</a>';
+                      }
+                      ?>
+                      <div class="carousel-item <?php echo ($i === 0) ? 'active' : ''; ?>">
+                        <?php echo $slide_content; ?>
+                      </div>
+                    <?php endforeach; ?>
+                  </div>
 
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselHero" data-bs-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselHero" data-bs-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Next</span>
-                </button>
-              </div>
+                  <button class="carousel-control-prev" type="button" data-bs-target="#carouselHero" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#carouselHero" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
+                </div>
               <?php endif; ?>
 
               <!-- Shop By Category Quick Pills -->
@@ -177,7 +178,7 @@ include 'includes/header.php';
               </div>
 
               <h2 class="section-title">Our Saree Collection</h2>
-              <div class="row row-cols-1 row-cols-md-3 g-4 mb-4" id="products-grid">
+              <div class="row row-cols-1 row-cols-md-3 g-4 mb-4">
                 <?php
                 try {
                   $limit = 9; // Number of items per page
@@ -226,35 +227,33 @@ include 'includes/header.php';
               </div>
 
               <!-- Modern Bootstrap 5 Pagination Bar -->
-              <div id="pagination-container">
-                <?php if (isset($total_pages) && $total_pages > 1): ?>
-                  <nav aria-label="Product Page Navigation" class="my-5">
-                    <ul class="pagination justify-content-center">
-                      <li class="page-item <?= ($page <= 1) ? 'disabled' : '' ?>">
-                        <a class="page-link page-click" href="#" data-page="<?= $page - 1 ?>" aria-label="Previous">
-                          <span aria-hidden="true">&laquo;</span>
-                        </a>
-                      </li>
+              <?php if (isset($total_pages) && $total_pages > 1): ?>
+                <nav aria-label="Product Page Navigation" class="my-5">
+                  <ul class="pagination justify-content-center">
+                    <li class="page-item <?= ($page <= 1) ? 'disabled' : '' ?>">
+                      <a class="page-link" href="?page=<?= $page - 1 ?>" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
 
-                      <?php
-                      $start_page = max(1, $page - 2);
-                      $end_page = min($total_pages, $page + 2);
-                      for ($i = $start_page; $i <= $end_page; $i++):
-                        ?>
-                        <li class="page-item <?= ($page == $i) ? 'active' : '' ?>">
-                          <a class="page-link page-click" href="#" data-page="<?= $i ?>"><?= $i ?></a>
-                        </li>
-                      <?php endfor; ?>
-
-                      <li class="page-item <?= ($page >= $total_pages) ? 'disabled' : '' ?>">
-                        <a class="page-link page-click" href="#" data-page="<?= $page + 1 ?>" aria-label="Next">
-                          <span aria-hidden="true">&raquo;</span>
-                        </a>
+                    <?php
+                    $start_page = max(1, $page - 2);
+                    $end_page = min($total_pages, $page + 2);
+                    for ($i = $start_page; $i <= $end_page; $i++):
+                      ?>
+                      <li class="page-item <?= ($page == $i) ? 'active' : '' ?>">
+                        <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
                       </li>
-                    </ul>
-                  </nav>
-                <?php endif; ?>
-              </div>
+                    <?php endfor; ?>
+
+                    <li class="page-item <?= ($page >= $total_pages) ? 'disabled' : '' ?>">
+                      <a class="page-link" href="?page=<?= $page + 1 ?>" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+              <?php endif; ?>
 
               <?php $pdo->close(); ?>
             </div>
@@ -268,67 +267,37 @@ include 'includes/header.php';
   </div>
 
   <script>
-  $(function(){
-    // AJAX Pagination
-    $(document).on('click', '.page-click', function (e) {
-      e.preventDefault();
-      var page = $(this).data('page');
-      if (page === undefined || $(this).parent().hasClass('disabled') || $(this).parent().hasClass('active')) {
-        return;
-      }
-      
-      $('#products-grid').css('opacity', '0.5');
-
-      $.ajax({
-        type: 'GET',
-        url: 'products_fetch.php',
-        data: { page: page },
-        dataType: 'json',
-        success: function (response) {
-          $('#products-grid').html(response.products).css('opacity', '1');
-          $('#pagination-container').html(response.pagination);
-          
-          $('html, body').animate({
-            scrollTop: $("#products-grid").offset().top - 120
-          }, 200);
-        },
-        error: function () {
-          $('#products-grid').css('opacity', '1');
-          showAlert('Unable to load products. Please try again.', 'danger');
-        }
+    $(function () {
+      $(document).on('click', '.add-to-cart-btn', function (e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        var btn = $(this);
+        btn.prop('disabled', true).html('<i class="fa-solid fa-spinner fa-spin"></i>');
+        $.ajax({
+          type: 'POST',
+          url: 'cart_add.php',
+          data: { id: id, quantity: 1 },
+          dataType: 'json',
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+          },
+          success: function (response) {
+            btn.prop('disabled', false).html('<i class="fa-solid fa-cart-shopping"></i> Add');
+            if (response.error) {
+              showAlert(response.message, 'danger');
+            }
+            else {
+              showAlert(response.message, 'success');
+              getCart();
+            }
+          },
+          error: function () {
+            btn.prop('disabled', false).html('<i class="fa-solid fa-cart-shopping"></i> Add');
+            showAlert('Unable to add item to cart. Please try again.', 'danger');
+          }
+        });
       });
     });
-
-    $(document).on('click', '.add-to-cart-btn', function(e){
-      e.preventDefault();
-      var id = $(this).data('id');
-      var btn = $(this);
-      btn.prop('disabled', true).html('<i class="fa-solid fa-spinner fa-spin"></i>');
-      $.ajax({
-        type: 'POST',
-        url: 'cart_add.php',
-        data: {id: id, quantity: 1},
-        dataType: 'json',
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest'
-        },
-        success: function(response){
-          btn.prop('disabled', false).html('<i class="fa-solid fa-cart-shopping"></i> Add');
-          if(response.error){
-            showAlert(response.message, 'danger');
-          }
-          else{
-            showAlert(response.message, 'success');
-            getCart();
-          }
-        },
-        error: function(){
-          btn.prop('disabled', false).html('<i class="fa-solid fa-cart-shopping"></i> Add');
-          showAlert('Unable to add item to cart. Please try again.', 'danger');
-        }
-      });
-    });
-  });
   </script>
 </body>
 
