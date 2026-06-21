@@ -161,7 +161,7 @@ if ($product['date_view'] == $now) {
                 submitBtn.prop('disabled', true).html('<i class="fa-solid fa-spinner fa-spin me-2"></i> Adding...');
                 $.ajax({
                     type: 'POST',
-                    url: 'ajax_action.php?action=cart_add',
+                    url: 'cart_add.php',
                     data: product,
                     dataType: 'json',
                     headers: {

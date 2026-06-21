@@ -177,7 +177,7 @@ include 'includes/header.php';
               </div>
 
               <h2 class="section-title">Our Saree Collection</h2>
-              <div class="row row-cols-1 row-cols-md-3 g-4 mb-4">
+              <div class="row row-cols-1 row-cols-md-3 g-4 mb-4" id="products-grid">
                 <?php
                 try {
                   $limit = 9; // Number of items per page
@@ -226,33 +226,35 @@ include 'includes/header.php';
               </div>
 
               <!-- Modern Bootstrap 5 Pagination Bar -->
-              <?php if (isset($total_pages) && $total_pages > 1): ?>
-                <nav aria-label="Product Page Navigation" class="my-5">
-                  <ul class="pagination justify-content-center">
-                    <li class="page-item <?= ($page <= 1) ? 'disabled' : '' ?>">
-                      <a class="page-link" href="?page=<?= $page - 1 ?>" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                      </a>
-                    </li>
-
-                    <?php
-                    $start_page = max(1, $page - 2);
-                    $end_page = min($total_pages, $page + 2);
-                    for ($i = $start_page; $i <= $end_page; $i++):
-                      ?>
-                      <li class="page-item <?= ($page == $i) ? 'active' : '' ?>">
-                        <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+              <div id="pagination-container">
+                <?php if (isset($total_pages) && $total_pages > 1): ?>
+                  <nav aria-label="Product Page Navigation" class="my-5">
+                    <ul class="pagination justify-content-center">
+                      <li class="page-item <?= ($page <= 1) ? 'disabled' : '' ?>">
+                        <a class="page-link page-click" href="#" data-page="<?= $page - 1 ?>" aria-label="Previous">
+                          <span aria-hidden="true">&laquo;</span>
+                        </a>
                       </li>
-                    <?php endfor; ?>
 
-                    <li class="page-item <?= ($page >= $total_pages) ? 'disabled' : '' ?>">
-                      <a class="page-link" href="?page=<?= $page + 1 ?>" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
-              <?php endif; ?>
+                      <?php
+                      $start_page = max(1, $page - 2);
+                      $end_page = min($total_pages, $page + 2);
+                      for ($i = $start_page; $i <= $end_page; $i++):
+                        ?>
+                        <li class="page-item <?= ($page == $i) ? 'active' : '' ?>">
+                          <a class="page-link page-click" href="#" data-page="<?= $i ?>"><?= $i ?></a>
+                        </li>
+                      <?php endfor; ?>
+
+                      <li class="page-item <?= ($page >= $total_pages) ? 'disabled' : '' ?>">
+                        <a class="page-link page-click" href="#" data-page="<?= $page + 1 ?>" aria-label="Next">
+                          <span aria-hidden="true">&raquo;</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </nav>
+                <?php endif; ?>
+              </div>
 
               <?php $pdo->close(); ?>
             </div>
@@ -267,6 +269,36 @@ include 'includes/header.php';
 
   <script>
   $(function(){
+    // AJAX Pagination
+    $(document).on('click', '.page-click', function (e) {
+      e.preventDefault();
+      var page = $(this).data('page');
+      if (page === undefined || $(this).parent().hasClass('disabled') || $(this).parent().hasClass('active')) {
+        return;
+      }
+      
+      $('#products-grid').css('opacity', '0.5');
+
+      $.ajax({
+        type: 'GET',
+        url: 'products_fetch.php',
+        data: { page: page },
+        dataType: 'json',
+        success: function (response) {
+          $('#products-grid').html(response.products).css('opacity', '1');
+          $('#pagination-container').html(response.pagination);
+          
+          $('html, body').animate({
+            scrollTop: $("#products-grid").offset().top - 120
+          }, 200);
+        },
+        error: function () {
+          $('#products-grid').css('opacity', '1');
+          showAlert('Unable to load products. Please try again.', 'danger');
+        }
+      });
+    });
+
     $(document).on('click', '.add-to-cart-btn', function(e){
       e.preventDefault();
       var id = $(this).data('id');
@@ -274,7 +306,7 @@ include 'includes/header.php';
       btn.prop('disabled', true).html('<i class="fa-solid fa-spinner fa-spin"></i>');
       $.ajax({
         type: 'POST',
-        url: 'ajax_action.php?action=cart_add',
+        url: 'cart_add.php',
         data: {id: id, quantity: 1},
         dataType: 'json',
         headers: {

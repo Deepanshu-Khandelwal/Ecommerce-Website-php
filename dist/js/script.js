@@ -72,7 +72,7 @@ function showAlert(message, type) {
 function getCart(){
   $.ajax({
     type: 'POST',
-    url: 'ajax_action.php?action=cart_fetch',
+    url: 'cart_fetch.php',
     dataType: 'json',
     success: function(response){
       $('#cart_menu').html(response.list);

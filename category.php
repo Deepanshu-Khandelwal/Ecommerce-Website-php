@@ -98,7 +98,7 @@ $(function(){
     btn.prop('disabled', true).html('<i class="fa-solid fa-spinner fa-spin"></i>');
     $.ajax({
       type: 'POST',
-      url: 'ajax_action.php?action=cart_add',
+      url: 'cart_add.php',
       data: {id: id, quantity: 1},
       dataType: 'json',
       headers: {

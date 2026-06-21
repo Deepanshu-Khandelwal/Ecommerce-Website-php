@@ -213,7 +213,7 @@ $(function(){
 		var id = $(this).data('id');
 		$.ajax({
 			type: 'POST',
-			url: 'ajax_action.php?action=transaction_details',
+			url: 'transaction_details.php',
 			data: {id:id},
 			dataType: 'json',
 			success:function(response){

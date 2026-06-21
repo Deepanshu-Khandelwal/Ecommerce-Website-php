@@ -98,7 +98,7 @@
             var id = $(this).data('id');
             $.ajax({
                 type: 'POST',
-                url: 'ajax_action.php?action=cart_delete',
+                url: 'cart_delete.php',
                 data: { id: id },
                 dataType: 'json',
                 success: function (response) {
@@ -120,7 +120,7 @@
             $('#qty_' + id).val(qty);
             $.ajax({
                 type: 'POST',
-                url: 'ajax_action.php?action=cart_update',
+                url: 'cart_update.php',
                 data: { id: id, qty: qty },
                 dataType: 'json',
                 success: function (response) {
@@ -142,7 +142,7 @@
             $('#qty_' + id).val(qty);
             $.ajax({
                 type: 'POST',
-                url: 'ajax_action.php?action=cart_update',
+                url: 'cart_update.php',
                 data: { id: id, qty: qty },
                 dataType: 'json',
                 success: function (response) {
@@ -164,7 +164,7 @@
     function getDetails() {
         $.ajax({
             type: 'POST',
-            url: 'ajax_action.php?action=cart_details',
+            url: 'cart_details.php',
             dataType: 'json',
             success: function (response) {
                 $('#tbody').html(response);
@@ -177,7 +177,7 @@
     function getTotal() {
         $.ajax({
             type: 'POST',
-            url: 'ajax_action.php?action=cart_total',
+            url: 'cart_total.php',
             dataType: 'json',
             success: function (response) {
                 total = response;  // Store the total price
